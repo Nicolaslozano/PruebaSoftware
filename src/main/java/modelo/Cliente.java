@@ -7,6 +7,7 @@ public class Cliente {
 	private String tipoCliente; // Residencial, Comercial, Industrial
 	private int idCliente;
 	private Medidor medidor;
+	private Consumo consumo;
 	private int edad;
 
 	public Cliente(int idCliente, String nombre, String direccion, String tipoCliente, int edad) {
@@ -74,6 +75,14 @@ public class Cliente {
 	public void setMedidor(Medidor medidor) {
 		this.medidor = medidor;
 	}
+	
+	public Consumo getConsumo() {
+		return consumo;
+	}
+	
+	public void setConsumo(Consumo consumo) {
+		this.consumo = consumo;
+	}
 
 	public int getEdad() {
 		return edad;
@@ -85,4 +94,5 @@ public class Cliente {
 		}
 		this.edad = edad;
 	}
+
 }

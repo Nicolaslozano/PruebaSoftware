@@ -1,39 +1,70 @@
 package test;
 
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 import modelo.Medidor;
 
-import static org.junit.Assert.assertEquals;
+import static org.junit.jupiter.api.Assertions.*;
 
 public class MedidorTest {
-    /*
+
+    private Medidor medidor;
+
+    @BeforeEach
+    public void setup() {
+        medidor = new Medidor("M001");
+        medidor.setLimiteConsumoDiario(100); // Límite para facilitar pruebas
+    }
 
     @Test
-    public void testRegistrarLectura() {
-        Medidor medidor = new Medidor("M001");
+    public void testRegistrarLectura_valida() {
+        medidor.registrarLectura(150);
+        assertEquals(150, medidor.getLecturaActual());
+        assertEquals(0, medidor.getLecturaAnterior());
+    }
 
-        medidor.registrarLectura(100.0);
-        assertEquals(100.0, medidor.getLecturaActual());
-        assertEquals(0.0, medidor.getLecturaAnterior());
-
-        medidor.registrarLectura(150.0);
-        assertEquals(150.0, medidor.getLecturaActual());
-        assertEquals(100.0, medidor.getLecturaAnterior());
+    @Test
+    public void testRegistrarLectura_negativa() {
+        Exception exception = assertThrows(IllegalArgumentException.class, () -> {
+            medidor.registrarLectura(-10); // Valor negativo
+        });
+        assertEquals("La lectura no puede ser negativa", exception.getMessage());
     }
 
     @Test
     public void testCalcularConsumo() {
-        Medidor medidor = new Medidor("M001");
-        medidor.registrarLectura(200.0);
-        medidor.registrarLectura(300.0);
-
-        double consumo = medidor.calcularConsumo();
-        assertEquals(100.0, consumo);
-
-
+        medidor.registrarLectura(100);
+        medidor.registrarLectura(200);
+        assertEquals(100, medidor.calcularConsumo(), 0.01);
     }
-     */
-}
 
+    @Test
+    public void testExcedeLimiteDiario_noExcede() {
+        medidor.registrarLectura(50); // Consumo total de 50, por debajo del límite
+        medidor.registrarLectura(90); // Consumo adicional de 40
+        assertFalse(medidor.excedeLimiteDiario());
+    }
+
+    @Test
+    public void testExcedeLimiteDiario_excede() {
+        medidor.registrarLectura(0);
+        medidor.registrarLectura(150); // Incremento de 150, sobrepasa el límite
+        assertTrue(medidor.excedeLimiteDiario());
+    }
+
+    @Test
+    public void testResetearLecturas() {
+        medidor.registrarLectura(300);
+        medidor.resetearLecturas();
+        assertEquals(0, medidor.getLecturaActual());
+        assertEquals(0, medidor.getLecturaAnterior());
+    }
+
+    @Test
+    public void testModificarLimiteConsumoDiario() {
+        medidor.setLimiteConsumoDiario(500);
+        assertEquals(500, medidor.getLimiteConsumoDiario());
+    }
+}
 
