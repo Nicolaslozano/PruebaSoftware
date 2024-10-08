@@ -1,52 +1,49 @@
 package modelo;
 
 public class Medidor {
-private Cliente cliente;
-private int nroSerie;
-private String domicilioMedidor;
-private Tarifa tarifa;
-private boolean esBaja;
-public Medidor(Cliente cliente, int nroSerie, String domicilioMedidor, Tarifa tarifa, boolean esBaja) {
-	
-	this.cliente = cliente;
-	this.nroSerie = nroSerie;
-	this.domicilioMedidor = domicilioMedidor;
-	this.tarifa = tarifa;
-	this.esBaja = esBaja;
-}
-public Cliente getCliente() {
-	return cliente;
-}
-public void setCliente(Cliente cliente) {
-	this.cliente = cliente;
-}
-public int getNroSerie() {
-	return nroSerie;
-}
-public void setNroSerie(int nroSerie) {
-	this.nroSerie = nroSerie;
-}
-public String getDomicilioMedidor() {
-	return domicilioMedidor;
-}
-public void setDomicilioMedidor(String domicilioMedidor) {
-	this.domicilioMedidor = domicilioMedidor;
-}
-public Tarifa getTarifa() {
-	return tarifa;
-}
-public void setTarifa(Tarifa tarifa) {
-	this.tarifa = tarifa;
-}
-public boolean isEsBaja() {
-	return esBaja;
-}
-public void setEsBaja(boolean esBaja) {
-	this.esBaja = esBaja;
-}
 
+	    private String idMedidor;
+	    private double lecturaActual;
+	    private double lecturaAnterior;
 
+	    public Medidor(String idMedidor) {
+	        this.idMedidor = idMedidor;
+	        this.lecturaActual = 0;
+	        this.lecturaAnterior = 0;
+	    }
 
+	    public void registrarLectura(double nuevaLectura) {
+	        this.lecturaAnterior = this.lecturaActual;
+	        this.lecturaActual = nuevaLectura;
+	    }
 
+	    public double calcularConsumo() {
+	        return this.lecturaActual - this.lecturaAnterior;
+	    }
 
-}
+		public String getIdMedidor() {
+			return idMedidor;
+		}
+
+		public void setIdMedidor(String idMedidor) {
+			this.idMedidor = idMedidor;
+		}
+
+		public double getLecturaActual() {
+			return lecturaActual;
+		}
+
+		public void setLecturaActual(double lecturaActual) {
+			this.lecturaActual = lecturaActual;
+		}
+
+		public double getLecturaAnterior() {
+			return lecturaAnterior;
+		}
+
+		public void setLecturaAnterior(double lecturaAnterior) {
+			this.lecturaAnterior = lecturaAnterior;
+		}
+
+	    // Getters y Setters
+	}
