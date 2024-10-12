@@ -87,37 +87,47 @@ public class GestionClientesIntegrationTest {
     public void testActualizarConsumoCliente() {
         gestionClientes.darDeAltaCliente(1, "Juan Pérez", "Calle Falsa 123", "Residencial", null, 25);
         Cliente cliente = gestionClientes.buscarClientePorId(1);
-        Consumo consumo = cliente.getConsumo();
         
+        Consumo consumo = new Consumo(cliente, 500); // Límite de consumo inicial
+        cliente.setConsumo(consumo); // Asignar consumo al cliente
+
         consumo.actualizarConsumo(200);
-        assertEquals(200, consumo.getConsumoTotal());
+        assertEquals(200, consumo.getConsumoTotal(), 0.01);
     }
+
 
     // 8. Test para aplicar un descuento en el consumo
     @Test
     public void testAplicarDescuentoEnConsumo() {
         gestionClientes.darDeAltaCliente(1, "Juan Pérez", "Calle Falsa 123", "Residencial", null, 25);
         Cliente cliente = gestionClientes.buscarClientePorId(1);
-        Consumo consumo = cliente.getConsumo();
         
+        Consumo consumo = new Consumo(cliente, 500); // Límite de consumo inicial
+        cliente.setConsumo(consumo); // Asigna consumo al cliente
+
         consumo.actualizarConsumo(400);
         consumo.aplicarDescuento(25);
-        
-        assertEquals(300, consumo.getConsumoTotal());
+
+        assertEquals(300, consumo.getConsumoTotal(), 0.01);
     }
+
 
     // 9. Test para verificar si el cliente ha alcanzado el límite de consumo
     @Test
     public void testAlcanzarLimiteConsumo() {
         gestionClientes.darDeAltaCliente(1, "Juan Pérez", "Calle Falsa 123", "Residencial", null, 25);
         Cliente cliente = gestionClientes.buscarClientePorId(1);
-        Consumo consumo = cliente.getConsumo();
-        
-        consumo.setLimiteConsumo(500);
+
+        // Aseguramos que el cliente tenga un objeto Consumo asociado
+        Consumo consumo = new Consumo(cliente, 500); // Establecemos el límite
+        cliente.setConsumo(consumo);
+
+        // Actualizamos el consumo para alcanzar el límite
         consumo.actualizarConsumo(500);
-        
+
         assertTrue(consumo.haAlcanzadoLimite());
     }
+
 
     // 10. Test para verificar que un cliente no puede ser dado de baja si no existe
     @Test

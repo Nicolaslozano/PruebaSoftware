@@ -1,29 +1,28 @@
 package test;
 
+import modelo.Cliente;
+import modelo.Consumo;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
-import modelo.Cliente;
-import modelo.Consumo;
-
 import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.Mockito.*;
+import static org.mockito.Mockito.when;
 
 public class ConsumoTest {
 
     @Mock
     private Cliente mockCliente;
 
-    @InjectMocks
     private Consumo consumo;
 
     @BeforeEach
     public void setup() {
+        // Inicializamos los mocks y luego creamos el objeto Consumo usando el mockCliente
         MockitoAnnotations.openMocks(this);
-        consumo = new Consumo(mockCliente, 500); // Establecemos un límite de consumo de 500
+        consumo = new Consumo(mockCliente, 500); // Límite de consumo de 500
     }
 
     @Test
@@ -75,6 +74,7 @@ public class ConsumoTest {
 
     @Test
     public void testGetCliente() {
+        // Simulamos el comportamiento de mockCliente para que devuelva un nombre específico
         when(mockCliente.getNombre()).thenReturn("Cliente de Ejemplo");
         assertEquals("Cliente de Ejemplo", consumo.getCliente().getNombre());
     }

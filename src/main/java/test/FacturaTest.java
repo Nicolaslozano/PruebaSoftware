@@ -1,29 +1,28 @@
 package test;
 
+import modelo.Cliente;
+import modelo.Factura;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
-import modelo.Cliente;
-import modelo.Factura;
-
 import java.time.LocalDate;
 
 import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.Mockito.*;
+import static org.mockito.Mockito.when;
 
 public class FacturaTest {
 
     @Mock
     private Cliente mockCliente;
 
-    @InjectMocks
     private Factura factura;
 
     @BeforeEach
     public void setup() {
+        // Inicializa los mocks y luego crea el objeto factura usando mockCliente
         MockitoAnnotations.openMocks(this);
         factura = new Factura("F001", mockCliente, 1000.0);
     }
@@ -51,6 +50,7 @@ public class FacturaTest {
 
     @Test
     public void testGetCliente() {
+        // Simulamos el comportamiento de mockCliente para devolver un nombre específico
         when(mockCliente.getNombre()).thenReturn("Cliente de Prueba");
         assertEquals("Cliente de Prueba", factura.getCliente().getNombre());
     }
@@ -67,3 +67,4 @@ public class FacturaTest {
         assertEquals("F002", factura.getIdFactura());
     }
 }
+
